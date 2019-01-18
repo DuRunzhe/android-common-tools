@@ -106,6 +106,8 @@ public class AppUtils {
     }
 
     /**
+     * 获取所有APP已安装应用信息
+     *
      * @param context
      * @return
      */
@@ -318,6 +320,11 @@ public class AppUtils {
         }
     };
 
+    /**
+     * @param view
+     * @param width
+     * @param height
+     */
     public static void changeViewSize(ImageView view, int width, int height) {
         view.setMinimumWidth(width);
         view.setMinimumHeight(height);
