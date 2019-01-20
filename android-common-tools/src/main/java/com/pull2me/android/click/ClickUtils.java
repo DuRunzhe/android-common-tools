@@ -7,7 +7,7 @@ import android.os.SystemClock;
  */
 public class ClickUtils {
     /* 双击事件、多击事件
-    */
+     */
     //存储时间的数组
     private static long[] mHits = new long[2];
     //三击事件
@@ -17,8 +17,9 @@ public class ClickUtils {
      * 双击事件
      *
      * @param runnable 双击事件发生时执行的逻辑
+     * @return true=确实是双击事件
      */
-    public static void doubleClick(Runnable runnable) {
+    public static boolean doubleClick(Runnable runnable) {
         // 双击事件响应
         /**
          * arraycopy,拷贝数组
@@ -40,7 +41,9 @@ public class ClickUtils {
             //双击后具体的操作
             //do
             runnable.run();
+            return true;
         }
+        return false;
     }
 
     /**
@@ -48,8 +51,9 @@ public class ClickUtils {
      *
      * @param runnable 双击事件发生时执行的逻辑
      * @param unDouble 非双击事件的逻辑
+     * @return true=确实是双击事件
      */
-    public static void doubleClick(Runnable runnable, Runnable unDouble) {
+    public static boolean doubleClick(Runnable runnable, Runnable unDouble) {
         // 双击事件响应
         /**
          * arraycopy,拷贝数组
@@ -71,9 +75,11 @@ public class ClickUtils {
             //双击后具体的操作
             //do
             runnable.run();
+            return true;
         } else {
             unDouble.run();
         }
+        return false;
     }
 
     /**
@@ -82,8 +88,9 @@ public class ClickUtils {
      * @param interval 双击间隔时间
      * @param runnable 双击事件发生时执行的逻辑
      * @param unDouble 非双击事件的逻辑
+     * @return true=确实是双击事件
      */
-    public static void doubleClick(long interval, Runnable runnable, Runnable unDouble) {
+    public static boolean doubleClick(long interval, Runnable runnable, Runnable unDouble) {
         // 双击事件响应
         /**
          * arraycopy,拷贝数组
@@ -105,17 +112,20 @@ public class ClickUtils {
             //双击后具体的操作
             //do
             runnable.run();
+            return true;
         } else {
             unDouble.run();
         }
+        return false;
     }
 
     /**
      * 三击事件
      *
      * @param runnable
+     * @return true=确实是三击事件
      */
-    public static void tribleClick(Runnable runnable) {
+    public static boolean tribleClick(Runnable runnable) {
         if (tripleHits == null) {
             tripleHits = new long[3];
         }
@@ -126,7 +136,9 @@ public class ClickUtils {
         //判断时间间隔
         if (SystemClock.uptimeMillis() - tripleHits[0] <= 500) {
             runnable.run();
+            return true;
         }
+        return false;
     }
 
     /**

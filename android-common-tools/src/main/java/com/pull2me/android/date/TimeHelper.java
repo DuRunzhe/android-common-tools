@@ -18,13 +18,23 @@ public class TimeHelper {
     public static final String PATTERN_NOT_NULL = "yyyy-MM-dd-HH:mm:ss";
     private volatile static Long[] startTimes = new Long[100];
     private volatile static int sIndex = 0;
-    private static final String TAG = TimeUtisHolder.class.getSimpleName();
+    private static final String TAG = TimeUtilsHolder.class.getSimpleName();
+    private long currentCostTime;
+
+    /**
+     * 获取当前点消耗时间
+     *
+     * @return
+     */
+    public long getCurrentCostTime() {
+        return currentCostTime;
+    }
 
     private TimeHelper() {
     }
 
     public synchronized static TimeHelper getInstance() {
-        return TimeUtisHolder.instance;
+        return TimeUtilsHolder.instance;
     }
 
     /**
@@ -255,8 +265,8 @@ public class TimeHelper {
                     if (sIndex < 1) {
                         throw new RuntimeException("If you call method start() before call preEndClick() at first time! ");
                     }
-                    long time = endMill - startTimes[sIndex - 1];
-                    Log.i(TAG, title + "--endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + time + "毫秒=" + calculateTime(time));
+                    currentCostTime = endMill - startTimes[sIndex - 1];
+                    Log.i(TAG, title + "--endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + currentCostTime + "毫秒=" + calculateTime(currentCostTime));
                     return TimeHelper.sIndex++;
                 }
             }
@@ -310,7 +320,7 @@ public class TimeHelper {
         }
     }
 
-    public static long parseString2Mill( String timeStr) {
+    public static long parseString2Mill(String timeStr) {
         Date date;
         try {
             date = SimpleDateFormat.getInstance().parse(timeStr);
@@ -320,7 +330,7 @@ public class TimeHelper {
         return date.getTime();
     }
 
-    private static class TimeUtisHolder {
+    private static class TimeUtilsHolder {
         private static final TimeHelper instance = new TimeHelper();
     }
 
