@@ -460,6 +460,7 @@ public class AppUtils {
      * @param context
      * @return
      */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     public static String getDeviceInfo(Context context) {
         try {
             org.json.JSONObject json = new org.json.JSONObject();

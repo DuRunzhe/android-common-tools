@@ -190,12 +190,12 @@ public class TimeHelper {
             synchronized (TimeHelper.class) {
                 init();
                 long startMill = System.currentTimeMillis();
-                Log.i(TAG, title + "--startTime:[" + startMill + "] " + convertDateStr(startMill));
+                Log.i(TAG, title + "  startTime:[" + startMill + "] " + convertDateStr(startMill));
                 startTimes = ArrayManager.safeLength(startTimes, sIndex);
                 startTimes[sIndex] = startMill;
             }
         } catch (Exception e) {
-            Log.i(TAG, "- - - - - 计时异常!!!!!");
+            Log.e(TAG, "- - - - - -start(title)计时异常!!!!!!!!" + e.getMessage());
         }
         return sIndex++;
     }
@@ -217,7 +217,7 @@ public class TimeHelper {
                     startTimes[TimeHelper.sIndex] = endMill;
                     Long startTime = startTimes[sIndex];
                     if (startTime == null) {
-                        Log.e(TAG, title + "--endTime:引用了一个错误的开始时间索引" + sIndex + ",startTimes[" + sIndex + "]=null");
+                        Log.e(TAG, title + "  endTime:引用了一个错误的开始时间索引" + sIndex + ",startTimes[" + sIndex + "]=null");
                         return -1;
                     }
                     long time = endMill - startTime;
@@ -225,7 +225,7 @@ public class TimeHelper {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "- - - - - -计时异常!!!!!");
+            Log.e(TAG, "- - - - - -end()计时异常!!!!!" + e.getMessage());
         }
         return TimeHelper.sIndex++;
     }
@@ -246,7 +246,7 @@ public class TimeHelper {
                     startTimes[TimeHelper.sIndex] = endMill;
                     Long startTime = startTimes[sIndex];
                     if (startTime == null) {
-                        Log.e(TAG, title + "--endTime:引用了一个错误的开始时间索引" + sIndex + ",startTimes[" + sIndex + "]=null");
+                        Log.e(TAG, title + "  endTime:引用了一个错误的开始时间索引" + sIndex + ",startTimes[" + sIndex + "]=null");
                         return endMill;
                     }
                     long time = endMill - startTime;
@@ -255,8 +255,7 @@ public class TimeHelper {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-            Log.i(TAG, "- - - - - -计时异常!!!!!");
+            Log.e(TAG, "- - - - - -showTimeSince()计时异常!!!!!" + e.getMessage());
         }
         return -1L;
     }
@@ -277,7 +276,7 @@ public class TimeHelper {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "- - - - - 计时异常!!!!");
+            Log.e(TAG, "- - - - - -preEndNunClick()计时异常!!!!" + e.getMessage());
         }
     }
 
@@ -304,8 +303,7 @@ public class TimeHelper {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, e.getMessage());
-            Log.i(TAG, "- - - - 计时异常！！");
+            Log.e(TAG, "- - - - - -preEndClick()计时异常!!" + e.getMessage());
         }
         return -1;
     }
@@ -329,7 +327,7 @@ public class TimeHelper {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "- - - - - - - 计时异常!!!!!");
+            Log.e(TAG, "- - - - - -wholeEndNunClick()计时异常!!!!!!" + e.getMessage());
         }
     }
 
