@@ -207,6 +207,7 @@ public class TimeHelper {
      * @param title
      * @return
      */
+    @Deprecated
     public int end(int sIndex, String title) {
         try {
             synchronized (TimeHelper.class) {
@@ -216,17 +217,48 @@ public class TimeHelper {
                     startTimes[TimeHelper.sIndex] = endMill;
                     Long startTime = startTimes[sIndex];
                     if (startTime == null) {
-                        Log.i(TAG, title + "--endTime:引用了一个错误的开始时间索引" + sIndex + ",startTimes[" + sIndex + "]=null");
+                        Log.e(TAG, title + "--endTime:引用了一个错误的开始时间索引" + sIndex + ",startTimes[" + sIndex + "]=null");
                         return -1;
                     }
                     long time = endMill - startTime;
-                    Log.i(TAG, title + "--endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + time + "毫秒=" + calculateTime(time));
+                    Log.i(TAG, title + "  endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + time + "毫秒=" + calculateTime(time));
                 }
             }
         } catch (Exception e) {
             Log.i(TAG, "- - - - - -计时异常!!!!!");
         }
         return TimeHelper.sIndex++;
+    }
+
+    /**
+     * 显示自编号sIndex开始距离现在的时间间隔
+     *
+     * @param sIndex 打点时间编号
+     * @param title  标题
+     * @return 计算所得时间 单位毫秒
+     */
+    public long showTimeSince(int sIndex, String title) {
+        try {
+            synchronized (TimeHelper.class) {
+                if (sIndex < startTimes.length) {
+                    long endMill = System.currentTimeMillis();
+                    startTimes = ArrayManager.safeLength(startTimes, TimeHelper.sIndex);
+                    startTimes[TimeHelper.sIndex] = endMill;
+                    Long startTime = startTimes[sIndex];
+                    if (startTime == null) {
+                        Log.e(TAG, title + "--endTime:引用了一个错误的开始时间索引" + sIndex + ",startTimes[" + sIndex + "]=null");
+                        return endMill;
+                    }
+                    long time = endMill - startTime;
+                    Log.i(TAG, title + "  endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + time + "毫秒=" + calculateTime(time));
+                    return time;
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            Log.i(TAG, "- - - - - -计时异常!!!!!");
+        }
+        return -1L;
     }
 
     /**
@@ -263,14 +295,16 @@ public class TimeHelper {
                     startTimes = ArrayManager.safeLength(startTimes, TimeHelper.sIndex);
                     startTimes[TimeHelper.sIndex] = endMill;
                     if (sIndex < 1) {
-                        throw new RuntimeException("If you call method start() before call preEndClick() at first time! ");
+                        throw new RuntimeException("If you call method start() before call preEndClick() at first time! you will see this! ");
                     }
                     currentCostTime = endMill - startTimes[sIndex - 1];
-                    Log.i(TAG, title + "--endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + currentCostTime + "毫秒=" + calculateTime(currentCostTime));
+                    Log.i(TAG, title + "  endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + currentCostTime + "毫秒=" + calculateTime(currentCostTime));
                     return TimeHelper.sIndex++;
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
             Log.i(TAG, "- - - - 计时异常！！");
         }
         return -1;
@@ -291,7 +325,7 @@ public class TimeHelper {
                         return;
                     }
                     long time = endMill - startTime;
-                    Log.i(TAG, title + "--endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + time + "毫秒=" + calculateTime(time));
+                    Log.i(TAG, title + "  endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + time + "毫秒=" + calculateTime(time));
                 }
             }
         } catch (Exception e) {
@@ -312,7 +346,7 @@ public class TimeHelper {
             long endMill = System.currentTimeMillis();
             startTimes[TimeHelper.sIndex] = endMill;
             long time = endMill - startTimes[0];
-            Log.i(TAG, title + "--endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + time + "毫秒=" + calculateTime(time));
+            Log.i(TAG, title + "  endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + time + "毫秒=" + calculateTime(time));
             return TimeHelper.sIndex++;
 //        } else {
 //            return -1;
