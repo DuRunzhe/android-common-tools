@@ -16,10 +16,10 @@ public class ClickUtils {
     /**
      * 双击事件
      *
-     * @param runnable 双击事件发生时执行的逻辑
+     * @param doubleRunnable 双击事件发生时执行的逻辑
      * @return true=确实是双击事件
      */
-    public static boolean doubleClick(Runnable runnable) {
+    public static boolean doubleClick(Runnable doubleRunnable) {
         // 双击事件响应
         /**
          * arraycopy,拷贝数组
@@ -40,7 +40,7 @@ public class ClickUtils {
         if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
             //双击后具体的操作
             //do
-            runnable.run();
+            doubleRunnable.run();
             return true;
         }
         return false;
@@ -49,11 +49,11 @@ public class ClickUtils {
     /**
      * 双击事件
      *
-     * @param runnable 双击事件发生时执行的逻辑
+     * @param doubleRunnable 双击事件发生时执行的逻辑
      * @param unDouble 非双击事件的逻辑
      * @return true=确实是双击事件
      */
-    public static boolean doubleClick(Runnable runnable, Runnable unDouble) {
+    public static boolean doubleClick(Runnable doubleRunnable, Runnable unDouble) {
         // 双击事件响应
         /**
          * arraycopy,拷贝数组
@@ -74,7 +74,7 @@ public class ClickUtils {
         if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
             //双击后具体的操作
             //do
-            runnable.run();
+            doubleRunnable.run();
             return true;
         } else {
             unDouble.run();
@@ -86,11 +86,11 @@ public class ClickUtils {
      * 双击事件
      *
      * @param interval 双击间隔时间
-     * @param runnable 双击事件发生时执行的逻辑
+     * @param doubleRunnable 双击事件发生时执行的逻辑
      * @param unDouble 非双击事件的逻辑
      * @return true=确实是双击事件
      */
-    public static boolean doubleClick(long interval, Runnable runnable, Runnable unDouble) {
+    public static boolean doubleClick(Runnable doubleRunnable, Runnable unDouble, long interval) {
         // 双击事件响应
         /**
          * arraycopy,拷贝数组
@@ -111,7 +111,7 @@ public class ClickUtils {
         if (mHits[0] >= (SystemClock.uptimeMillis() - interval)) {
             //双击后具体的操作
             //do
-            runnable.run();
+            doubleRunnable.run();
             return true;
         } else {
             unDouble.run();

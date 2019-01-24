@@ -294,7 +294,7 @@ public class TimeHelper {
                     startTimes = ArrayManager.safeLength(startTimes, TimeHelper.sIndex);
                     startTimes[TimeHelper.sIndex] = endMill;
                     if (sIndex < 1) {
-                        throw new RuntimeException("If you call method start() before call preEndClick() at first time! you will see this! ");
+                        throw new RuntimeException("If you not call method start() before call preEndClick() at first time! you will see this! ");
                     }
                     currentCostTime = endMill - startTimes[sIndex - 1];
                     Log.i(TAG, title + "  endTime:[" + endMill + "] " + convertDateStr(endMill) + ",用时：" + currentCostTime + "毫秒=" + calculateTime(currentCostTime));
