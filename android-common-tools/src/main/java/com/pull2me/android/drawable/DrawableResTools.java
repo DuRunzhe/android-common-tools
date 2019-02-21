@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 /**
- * @Author: runzhedu {a12345570@163.com}
+ * @Author: runzhedu {durunzhe666@gmail.com}
  * @Time: 2018/9/25 下午10:56
  **/
 public class DrawableResTools {

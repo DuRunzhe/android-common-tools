@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.TypedValue;
 
 /**
- * @Author: runzhedu {a12345570@163.com}
+ * @Author: runzhedu {durunzhe666@gmail.com}
  * @Time: 2018/9/26 上午7:44
  **/
 public class DensityUtils {
