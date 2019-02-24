@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 // 这里添加下面两行代码。
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.github.dcendents.android-maven'
 
 group='com.github.DuRunzhe'
 android {
@@ -11,7 +10,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 10
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -33,6 +32,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support:support-v4:25.4.0'
+    implementation 'com.android.support:design:25.4.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
