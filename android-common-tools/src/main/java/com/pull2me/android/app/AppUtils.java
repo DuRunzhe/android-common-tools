@@ -5,15 +5,19 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.annotation.RequiresPermission;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -37,7 +41,9 @@ import static android.content.Context.ACTIVITY_SERVICE;
  */
 public class AppUtils {
 
-    /** 获取进程信息
+    /**
+     * 获取进程信息
+     *
      * @param context
      * @return
      */
@@ -471,22 +477,22 @@ public class AppUtils {
                 device_id = tm.getDeviceId();
             }
             String mac = null;
-            FileReader fstream = null;
+            FileReader fr;
             try {
-                fstream = new FileReader("/sys/class/net/wlan0/address");
+                fr = new FileReader("/sys/class/net/wlan0/address");
             } catch (FileNotFoundException e) {
-                fstream = new FileReader("/sys/class/net/eth0/address");
+                fr = new FileReader("/sys/class/net/eth0/address");
             }
             BufferedReader in = null;
-            if (fstream != null) {
+            if (fr != null) {
                 try {
-                    in = new BufferedReader(fstream, 1024);
+                    in = new BufferedReader(fr, 1024);
                     mac = in.readLine();
                 } catch (IOException e) {
                 } finally {
-                    if (fstream != null) {
+                    if (fr != null) {
                         try {
-                            fstream.close();
+                            fr.close();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -532,5 +538,57 @@ public class AppUtils {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    /**
+     * 判断Gps是否可用
+     *
+     * @return {@code true}: 是
+     * {@code false}: 否
+     */
+    private boolean isGpsEnabled(Context context) {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (lm == null) {
+            return false;
+        }
+        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    /**
+     * 判断定位是否可用
+     *
+     * @return {@code true}: 是
+     * {@code false}: 否
+     */
+    private boolean isLocationEnabled(Context context) {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (lm == null) {
+            return false;
+        }
+        return lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER) || lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    /**
+     * 打开Gps设置界面
+     *
+     * @param context
+     */
+    public static void openGpsSettings(Context context) {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 打开应用设置界面
+     *
+     * @param context
+     */
+    public static void openApplicationSetting(Context context) {
+
+        Uri packageURI = Uri.parse("package:" + context.getPackageName());
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

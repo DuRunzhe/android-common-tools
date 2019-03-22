@@ -102,6 +102,7 @@ public class BitmapUtils {
         float originWidth = opts.outWidth;
         float originHeight = opts.outHeight;
 
+
         //[4]计算缩放比
         int scale = 1;//默认的缩放比
         float scalex = originWidth / displayWidth;
